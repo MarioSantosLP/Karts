@@ -1,4 +1,4 @@
-import { lastSession } from './season.js'
+import { sessions, getFastestResult } from './season.js'
 
 export const drivers = [
   { id: 'carolina-duarte', name: 'Carolina Duarte', number: 4, accent: '#669cff' },
@@ -13,16 +13,14 @@ export const drivers = [
   { id: 'jia-kang', name: 'Jia Kang', number: 29, accent: '#9ec98a' },
 ]
 
-// Only this session has individual results. Season totals are not career totals.
-export const driverSessions = [lastSession]
+export const driverSessions = sessions
 
 export function getDriverResults(driver) {
   return driverSessions.flatMap((session) => {
-    const sortedResults = [...session.results].sort((a, b) => a.bestLap - b.bestLap)
-    const position = sortedResults.findIndex((result) => result.number === driver.number)
-    if (position === -1) return []
-    return [{ session, result: sortedResults[position], position: position + 1, gap: sortedResults[position].bestLap - sortedResults[0].bestLap }]
-  }).sort((a, b) => b.session.date.localeCompare(a.session.date))
+    const result = session.results.find((result) => result.driverId === driver.id)
+    if (!result) return []
+    return [{ session, result, position: result.position, gap: result.bestLap - getFastestResult(session).bestLap }]
+  }).sort((a, b) => `${b.session.date}T${b.session.time}`.localeCompare(`${a.session.date}T${a.session.time}`))
 }
 
 export function getDriverByNumber(number) {

@@ -1,11 +1,11 @@
 import TrackMap from '../shared/TrackMap'
-import { lastSession } from '../../data/season'
+import { getFastestResult, lastSession } from '../../data/season'
 import { tracks } from '../../data/tracks'
 import { formatDate, formatLap } from '../../format'
 
 function LandingTrackCard({ paused, onToggleMotion }) {
   const track = tracks[lastSession.trackId]
-  const fastest = lastSession.results[0]
+  const fastest = getFastestResult(lastSession)
 
   function moveCircuit(event) {
     if (paused || event.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -34,7 +34,7 @@ function LandingTrackCard({ paused, onToggleMotion }) {
         <div className="circuit-tilt"><TrackMap track={track} paused={paused} /></div>
         <div className="best-lap">
           <span className="best-lap-label"><span aria-hidden="true">↗</span> Melhor volta</span>
-          <strong>{formatLap(fastest.bestLap)}<small>s</small></strong>
+          <strong>{formatLap(fastest.bestLap)}</strong>
           <span className="best-lap-driver">{fastest.driver} <span>#{fastest.number}</span></span>
         </div>
         <button className="motion-toggle" onClick={onToggleMotion} aria-pressed={paused} aria-label={paused ? 'Retomar animações' : 'Pausar animações'} title={paused ? 'Retomar animações' : 'Pausar animações'}>
@@ -44,7 +44,7 @@ function LandingTrackCard({ paused, onToggleMotion }) {
       <div className="circuit-name"><span className="tiny-square" /><span>{track.name}</span><span className="circuit-name-arrow" aria-hidden="true">↗</span></div>
       <dl className="track-card-stats">
         <div><dt>Data da sessão</dt><dd>{formatDate(lastSession.date)} <span>{lastSession.date.slice(0, 4)}</span></dd></div>
-        <div><dt>Voltas</dt><dd>{lastSession.laps}<span> / piloto</span></dd></div>
+        <div><dt>Voltas do vencedor</dt><dd>{lastSession.laps}</dd></div>
         <div><dt>Na grelha</dt><dd>{lastSession.results.length}<span> pilotos</span></dd></div>
       </dl>
     </article>

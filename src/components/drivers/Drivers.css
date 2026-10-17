@@ -295,3 +295,16 @@ html[data-view='driver'] { scroll-behavior: auto; }
   .profile-copy, .profile-photo-column { animation: none; }
   .driver-card, .driver-card-open { transition: none; }
 }
+
+/* Full names and minute-based lap times from real session data. */
+.profile-copy h1 { overflow-wrap: anywhere; font-size: clamp(52px, 6.3vw, 92px); }
+.driver-card-name h3 { min-width: 0; overflow-wrap: anywhere; font-size: 22px; }
+.driver-card-name > span { flex-shrink: 0; }
+.record-time { white-space: nowrap; }
+@media (max-width: 560px) {
+  .profile-copy h1 { font-size: 64px; }
+  .driver-card-name h3 { font-size: 19px; }
+  .driver-card-result strong { font-size: 18px; }
+  .driver-card-result { align-items: start; flex-direction: column; gap: 12px; }
+  .driver-card-position { flex-direction: row; align-items: baseline; gap: 6px; }
+}

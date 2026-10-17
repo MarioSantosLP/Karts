@@ -1,47 +1,48 @@
-import { lastSession } from '../../data/season'
+import { useState } from 'react'
+import { getFastestResult, lastSession, sessions } from '../../data/season'
 import { tracks } from '../../data/tracks'
-import { getDriverByNumber } from '../../data/drivers'
 import { formatDate, formatGap, formatLap, padNumber } from '../../format'
 
 function LandingLastSession() {
-  const fastest = lastSession.results[0]
-  const track = tracks[lastSession.trackId]
+  const [sessionId, setSessionId] = useState(lastSession.id)
+  const session = sessions.find(({ id }) => id === sessionId)
+  const fastest = getFastestResult(session)
+  const isRace = session.type === 'race'
 
   return (
     <section className="container session-section" id="sessoes" aria-labelledby="session-title">
       <div className="section-heading" data-reveal>
-        <div><p className="eyebrow"><span className="section-number">01</span> Última sessão</p><h2 id="session-title">A pista deu o <em>veredicto.</em></h2></div>
-        <span className="session-date"><span className="tiny-square" /> {formatDate(lastSession.date)} {lastSession.date.slice(0, 4)}</span>
+        <div><p className="eyebrow"><span className="section-number">01</span> Última ida à pista</p><h2 id="session-title">A pista deu o <em>veredicto.</em></h2></div>
+        <span className="session-date"><span className="tiny-square" /> {formatDate(session.date)} {session.date.slice(0, 4)}</span>
+      </div>
+      <div className="session-switch" role="group" aria-label="Escolher sessão">
+        {sessions.map((item) => <button key={item.id} type="button" aria-pressed={sessionId === item.id} onClick={() => setSessionId(item.id)}>{item.type === 'race' ? 'Corrida' : 'Classificação'} · {item.time}</button>)}
       </div>
       <div className="session-layout" id="ultima-sessao">
-        <article className="session-card" id="classificacao" aria-label="Classificação da última sessão" data-reveal>
+        <article className="session-card" id="classificacao" aria-label="Resultados da sessão" data-reveal>
           <header className="session-card-header">
-            <div><h3>{lastSession.name}</h3><p>{track.name} <span>·</span> {lastSession.laps} voltas</p></div>
-            <span className="results-badge">Resultados</span>
+            <div><h3>{session.name}</h3><p>{tracks[session.trackId].name} <span>·</span> {session.time}</p></div>
+            <span className="results-badge">{session.results.length} pilotos</span>
           </header>
-          <div className="results-labels" aria-hidden="true"><span>Pos.</span><span>Piloto</span><span>Melhor volta</span><span>Intervalo</span></div>
-          <ol className="results" aria-label="Pilotos por melhor volta">
-            {lastSession.results.map((result, i) => (
-              <li key={result.number} className={i === 0 ? 'is-leader' : undefined}>
-                <span className="position">{padNumber(i + 1)}</span>
-                <a className="driver driver-profile-link" href={`#piloto/${getDriverByNumber(result.number).id}`} aria-label={`Ver perfil de ${result.driver}`}><span className="driver-avatar" aria-hidden="true">{result.driver[0]}</span><span>{result.driver}<small>#{padNumber(result.number)}</small></span></a>
-                <span className="lap-time">{formatLap(result.bestLap)}<small>s</small></span>
-                <span className={`delta${i === 0 ? ' leader-label' : ''}`}>{i === 0 ? 'Líder' : formatGap(result.bestLap - fastest.bestLap)}</span>
-              </li>
-            ))}
-          </ol>
-          <footer className="session-card-footer"><span className="signal-dot" /> Classificação por melhor volta <span>{lastSession.results.length} pilotos</span></footer>
+          <div className="session-results-scroll" tabIndex={0} role="region" aria-label="Tabela de resultados; desliza para ver todas as colunas">
+            <table className="session-results-table">
+              <thead><tr><th scope="col">Pos.</th><th scope="col">Piloto / kart</th><th scope="col">Melhor volta</th><th scope="col">Voltas</th><th scope="col">{isRace ? 'Intervalo' : 'Diferença'}</th></tr></thead>
+              <tbody>{session.results.map((result) => <tr key={result.driverId} className={result.position === 1 ? 'is-leader' : undefined}>
+                <td>{padNumber(result.position)}</td>
+                <td><a className="driver driver-profile-link" href={`#piloto/${result.driverId}`}><span className="driver-avatar" aria-hidden="true">{result.driver[0]}</span><span>{result.driver}<small>Kart #{padNumber(result.kartNumber)}</small></span></a></td>
+                <td>{formatLap(result.bestLap)}</td><td>{result.laps}</td>
+                <td>{isRace ? result.interval : result.position === 1 ? '—' : `${formatGap(result.gap)}s`}</td>
+              </tr>)}</tbody>
+            </table>
+          </div>
+          <p className="results-scroll-hint">Desliza a tabela para ver voltas e intervalos →</p>
+          <footer className="session-card-footer"><span className="signal-dot" /> {isRace ? 'Posição de chegada · intervalo para o anterior' : 'Ordenada pela melhor volta · diferença para o líder'}</footer>
         </article>
         <aside className="fastest-card" data-reveal aria-label="Destaque da sessão">
           <div className="fastest-top"><span className="eyebrow">O ritmo a bater</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 2-9 12h6l-1 8 9-12h-6z" /></svg></div>
-          <span className="fastest-number" aria-hidden="true">{padNumber(fastest.number)}</span>
-          <div className="fastest-content">
-            <span className="fastest-caption">Volta mais rápida</span>
-            <p className="fastest-time">{formatLap(fastest.bestLap)}<small>s</small></p>
-            <h3>{fastest.driver}<span>#{padNumber(fastest.number)}</span></h3>
-            {fastest.pbDelta && <p className="personal-best"><span aria-hidden="true">↗</span> {formatGap(fastest.pbDelta)}s <span>face ao recorde pessoal anterior</span></p>}
-          </div>
-          <div className="fastest-footer"><span className="tiny-square" /> Cada décima conta.</div>
+          <span className="fastest-number" aria-hidden="true">{padNumber(fastest.kartNumber)}</span>
+          <div className="fastest-content"><span className="fastest-caption">Volta mais rápida · {isRace ? 'corrida' : 'classificação'}</span><p className="fastest-time">{formatLap(fastest.bestLap)}</p><h3>{fastest.driver}</h3></div>
+          <div className="fastest-footer"><span className="tiny-square" /> Kart #{fastest.kartNumber} · {session.time}</div>
         </aside>
       </div>
     </section>

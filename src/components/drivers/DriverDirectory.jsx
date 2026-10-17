@@ -55,7 +55,7 @@ function DriverDirectory() {
           return (
             <a key={driver.id} href={`#piloto/${driver.id}`} className="driver-card" style={{ '--driver-accent': driver.accent }} aria-label={`Ver perfil de ${driver.name}`}>
               <div className="driver-card-image"><DriverPortrait driver={driver} /><span className="driver-card-number" aria-hidden="true">{padNumber(driver.number)}</span><span className="driver-card-team">APEX CREW / PILOTO</span><span className="driver-card-open" aria-hidden="true">↗</span></div>
-              <div className="driver-card-content"><div className="driver-card-name"><h3>{driver.name}</h3><span>#{padNumber(driver.number)}</span></div><div className="driver-card-result"><div><span>Melhor volta registada</span><strong>{latest ? formatLap(Math.min(...getDriverResults(driver).map(({ result }) => result.bestLap))) : '—'}<small>s</small></strong></div><span className="driver-card-position">{latest ? `${latest.position}.º` : '—'}<small>última sessão</small></span></div><div className="driver-card-footer">Conhecer o piloto <span aria-hidden="true">→</span></div></div>
+              <div className="driver-card-content"><div className="driver-card-name"><h3>{driver.name}</h3><span>#{padNumber(driver.number)}</span></div><div className="driver-card-result"><div><span>Melhor volta registada</span><strong>{latest ? formatLap(Math.min(...getDriverResults(driver).map(({ result }) => result.bestLap))) : '—'}</strong></div><span className="driver-card-position">{latest ? `${latest.position}.º` : '—'}<small>última sessão</small></span></div><div className="driver-card-footer">Conhecer o piloto <span aria-hidden="true">→</span></div></div>
             </a>
           )
         })}

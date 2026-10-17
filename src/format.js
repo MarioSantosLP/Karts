@@ -12,7 +12,9 @@ export function formatCount(n) {
 }
 
 export function formatLap(seconds) {
-  return seconds.toFixed(3)
+  const milliseconds = Math.round(seconds * 1000)
+  if (milliseconds < 60000) return (milliseconds / 1000).toFixed(3)
+  return `${Math.floor(milliseconds / 60000)}:${((milliseconds % 60000) / 1000).toFixed(3).padStart(6, '0')}`
 }
 
 // Signed gap, using a real minus sign: 0.325 -> '+0.325', -0.327 -> '−0.327'
