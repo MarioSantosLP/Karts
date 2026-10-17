@@ -36,7 +36,7 @@ function Landing() {
       <LandingStats />
       <LandingLastSession />
       <DriverDirectory />
-      <footer className="container site-footer"><a href="#inicio">{crewName}<span>↗</span></a><p>Boas voltas. Melhores histórias.</p><span>Temporada {season.year}</span></footer>
+      <footer className="container site-footer"><a href="#inicio">{crewName}<span>↗︎</span></a><p>Boas voltas. Melhores histórias.</p><span>Temporada {season.year}</span></footer>
     </div>
   )
 }

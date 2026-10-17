@@ -15,7 +15,7 @@ function DriverCard({ driver, result: sessionResult, sessionType, label = 'APEX 
         <DriverPortrait driver={driver} />
         <span className="driver-card-number" aria-hidden="true">{padNumber(driver.number)}</span>
         <span className="driver-card-team">{label}</span>
-        <span className="driver-card-open" aria-hidden="true">↗</span>
+        <span className="driver-card-open" aria-hidden="true">↗︎</span>
       </div>
       <div className="driver-card-content">
         <div className="driver-card-name"><h3>{driver.name}</h3><span>#{padNumber(driver.number)}</span></div>

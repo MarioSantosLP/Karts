@@ -32,7 +32,7 @@ function LandingTrackCard({ paused, onToggleMotion }) {
         <div className="circuit-coordinates" aria-hidden="true"><span>TRAÇADO / 01</span><span>APEX CREW</span></div>
         <div className="circuit-tilt"><TrackMap track={track} paused={paused} /></div>
         <div className="best-lap">
-          <span className="best-lap-label"><span aria-hidden="true">↗</span> Melhor volta</span>
+          <span className="best-lap-label"><span aria-hidden="true">↗︎</span> Melhor volta</span>
           <strong>{formatLap(fastest.bestLap)}</strong>
           <span className="best-lap-driver">{fastest.driver} <span>#{fastest.number}</span></span>
         </div>
@@ -40,7 +40,7 @@ function LandingTrackCard({ paused, onToggleMotion }) {
           {paused ? <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6Z" /></svg> : <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4h3v12H6zm5 0h3v12h-3z" /></svg>}
         </button>
       </div>
-      <div className="circuit-name"><span className="tiny-square" /><span>{track.name}</span><span className="circuit-name-arrow" aria-hidden="true">↗</span></div>
+      <div className="circuit-name"><span className="tiny-square" /><span>{track.name}</span><span className="circuit-name-arrow" aria-hidden="true">↗︎</span></div>
       <dl className="track-card-stats">
         <div><dt>Data da sessão</dt><dd>{formatDate(lastSession.date)} <span>{lastSession.date.slice(0, 4)}</span></dd></div>
         <div><dt>Voltas do vencedor</dt><dd>{lastSession.laps}</dd></div>

@@ -7,7 +7,7 @@ import DriverPortrait from './DriverPortrait'
 import './Drivers.css'
 
 function DriverProfile({ driver }) {
-  if (!driver) return <section className="container driver-not-found"><p className="eyebrow">Apex Crew</p><h1 data-page-heading tabIndex={-1}>Piloto não encontrado.</h1><a className="button button-primary" href="#pilotos">Voltar aos pilotos <span aria-hidden="true">↗</span></a></section>
+  if (!driver) return <section className="container driver-not-found"><p className="eyebrow">Apex Crew</p><h1 data-page-heading tabIndex={-1}>Piloto não encontrado.</h1><a className="button button-primary" href="#pilotos">Voltar aos pilotos <span aria-hidden="true">↗︎</span></a></section>
 
   const history = getDriverResults(driver)
   const meetings = Array.from(history.reduce((groups, entry) => {
@@ -39,7 +39,7 @@ function DriverProfile({ driver }) {
             <h1 id="profile-title" data-page-heading tabIndex={-1}>{driver.name}<span></span></h1>
             <p className="profile-tagline">A mesma paixão. Uma forma única de fazer a curva.</p>
             <div className="profile-tags"><span><span className="signal-dot" /> Temporada {season.year}</span><span>{latest ? `${latest.position}.º na última corrida` : 'Sem resultados registados'}</span></div>
-            {latest && <div className="profile-hero-result"><span aria-hidden="true">↗</span><p>{latest.gap === 0 ? 'A volta mais rápida da última corrida.' : `${formatGap(latest.gap)}s face à volta mais rápida da última corrida.`}<small>{tracks[latest.session.trackId].name}</small></p></div>}
+            {latest && <div className="profile-hero-result"><span aria-hidden="true">↗︎</span><p>{latest.gap === 0 ? 'A volta mais rápida da última corrida.' : `${formatGap(latest.gap)}s face à volta mais rápida da última corrida.`}<small>{tracks[latest.session.trackId].name}</small></p></div>}
           </div>
           <div className="profile-photo-column"><div className="profile-portrait"><span className="profile-photo-number" aria-hidden="true">{padNumber(driver.number)}</span><DriverPortrait driver={driver} priority /><span className="profile-photo-name">{driver.name}<span>#{padNumber(driver.number)}</span></span></div></div>
         </div>
@@ -53,7 +53,7 @@ function DriverProfile({ driver }) {
       <div className="container profile-body">
         <div className="profile-main-column">
           <section className="profile-record" aria-labelledby="record-title"><div className="profile-section-heading"><span className="section-number">01</span><h2 id="record-title">O tempo de referência.</h2></div>
-            {best ? <div className="record-panel"><div><p className="eyebrow">Melhor volta no histórico</p><h3>{tracks[best.session.trackId].name}</h3><p className="record-date">{formatDate(best.session.date)} {best.session.date.slice(0, 4)}</p>{best.result.pbDelta < 0 && <span className="record-improvement">↗ {formatGap(best.result.pbDelta)}s face ao recorde pessoal anterior</span>}</div><p className="record-time">{formatLap(best.result.bestLap)}</p></div> : <p className="profile-no-results">Os tempos aparecem aqui após a primeira sessão.</p>}
+            {best ? <div className="record-panel"><div><p className="eyebrow">Melhor volta no histórico</p><h3>{tracks[best.session.trackId].name}</h3><p className="record-date">{formatDate(best.session.date)} {best.session.date.slice(0, 4)}</p>{best.result.pbDelta < 0 && <span className="record-improvement">↗︎ {formatGap(best.result.pbDelta)}s face ao recorde pessoal anterior</span>}</div><p className="record-time">{formatLap(best.result.bestLap)}</p></div> : <p className="profile-no-results">Os tempos aparecem aqui após a primeira sessão.</p>}
           </section>
           <section className="profile-history" aria-labelledby="history-title"><div className="profile-section-heading"><span className="section-number">02</span><h2 id="history-title">Cada sessão, uma história.</h2><span className="profile-section-count">{history.length} {history.length === 1 ? 'sessão' : 'sessões'}</span></div>
             <div className="profile-meetings">
@@ -98,7 +98,7 @@ function DriverProfile({ driver }) {
               </a>
             </li>
           )
-        })}</ol><a className="profile-all-results" href="#classificacao">Ver classificação completa <span aria-hidden="true">↗</span></a></aside>
+        })}</ol><a className="profile-all-results" href="#classificacao">Ver classificação completa <span aria-hidden="true">↗︎</span></a></aside>
       </div>
       <footer className="container profile-footer"><a href="#pilotos"><span aria-hidden="true">←</span> Voltar à grelha</a><span>{crewName} / {season.year}</span><a href={`#piloto/${next.id}`}>Próximo piloto: {next.name}<span aria-hidden="true">→</span></a></footer>
     </div>

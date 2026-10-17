@@ -21,7 +21,7 @@ function LandingHero({ paused, onToggleMotion }) {
           </p>
           <div className="hero-actions hero-enter">
             <a className="button button-primary" href="#classificacao">
-              Ver classificação <span aria-hidden="true">↗</span>
+              Ver classificação <span aria-hidden="true">↗︎</span>
             </a>
             <a className="hero-session-link" href="#sessoes">
               Última sessão <span aria-hidden="true">↓</span>
