@@ -4,25 +4,31 @@ export const crewName = 'Apex Crew'
 
 export const season = {
   year: 2026,
-  sessions: 28,
-  laps: 1427,
-  drivers: 6,
-  circuits: 12,
+  sessions: 1,
+  laps: 16,
+  drivers: 10,
+  circuits: 1,
 }
 
 export const lastSession = {
   name: 'Weekend Grand Prix',
   trackId: 'internacional',
   date: '2026-10-16',
-  laps: 12,
+  laps: 16,
   status: 'Concluída',
-  // pbDelta: improvement on the driver's previous personal best, in seconds
+  // Ordered fastest first.
+  // TODO: placeholder lap times — replace with the real times from the race.
+  // pbDelta (optional): improvement on the driver's previous personal best, in seconds
   results: [
-    { driver: 'Mário', number: 27, bestLap: 52.481, pbDelta: -0.327 },
-    { driver: 'Duarte', number: 14, bestLap: 52.806 },
-    { driver: 'Filipe', number: 8, bestLap: 53.124 },
-    { driver: 'Samuel', number: 19, bestLap: 53.397 },
-    { driver: 'Tiago', number: 33, bestLap: 53.582 },
-    { driver: 'Rafael', number: 5, bestLap: 53.911 },
+    { driver: 'Carolina Duarte', number: 4, bestLap: 52.481 },
+    { driver: 'Tomás Duarte', number: 13, bestLap: 52.806 },
+    { driver: 'Mário Santos', number: 17, bestLap: 53.124 },
+    { driver: 'Nuno Duarte', number: 44, bestLap: 53.397 },
+    { driver: 'Tiago Cardoso', number: 35, bestLap: 53.582 },
+    { driver: 'Guilherme Pina', number: 34, bestLap: 53.911 },
+    { driver: 'Nicolas Mendes', number: 21, bestLap: 54.208 },
+    { driver: 'Juan Lima', number: 36, bestLap: 54.563 },
+    { driver: 'Rodrigo Pires', number: 37, bestLap: 54.870 },
+    { driver: 'Jia Kang', number: 29, bestLap: 55.342 },
   ],
 }
