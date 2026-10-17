@@ -2,9 +2,9 @@ import { sessions, getFastestResult } from './season.js'
 
 export const drivers = [
   { id: 'carolina-duarte', name: 'Carolina Duarte', number: 4, accent: '#669cff' },
-  { id: 'tomas-duarte', portrait: '/portraits/tomas-duarte.png', name: 'Tomás Duarte', number: 13, accent: '#75c9dd' },
+  { id: 'tomas-duarte', portrait: `${import.meta.env.BASE_URL}portraits/tomas-duarte.png`, name: 'Tomás Duarte', number: 13, accent: '#75c9dd' },
   { id: 'mario-santos', name: 'Mário Santos', number: 17, accent: '#a196ed' },
-  { id: 'nuno-duarte', portrait: '/portraits/nuno-duarte.png', name: 'Nuno Duarte', number: 44, accent: '#7bc4ab' },
+  { id: 'nuno-duarte', portrait: `${import.meta.env.BASE_URL}portraits/nuno-duarte.png`, name: 'Nuno Duarte', number: 44, accent: '#7bc4ab' },
   { id: 'tiago-cardoso', name: 'Tiago Cardoso', number: 35, accent: '#e3b47e' },
   { id: 'guilherme-pina', name: 'Guilherme Pina', number: 34, accent: '#b29bda' },
   { id: 'nicolas-mendes', name: 'Nicolas Mendes', number: 21, accent: '#e48fa8' },

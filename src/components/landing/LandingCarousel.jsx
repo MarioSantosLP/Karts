@@ -2,9 +2,9 @@ import { useRef, useState } from 'react'
 import './LandingCarousel.css'
 
 const photos = [
-  { src: '/crew/crew-kip-1.jpeg', alt: 'A crew reunida no pódio do Kartódromo Internacional de Palmela.' },
-  { src: '/crew/podio-kip.jpeg', alt: 'Nuno à esquerda, Tomás ao centro e Tiago à direita, com os seus troféus.' },
-  { src: '/crew/crew-kip-2.jpeg', alt: 'Outra fotografia do grupo no pódio do KIP.' },
+  { src: `${import.meta.env.BASE_URL}crew/crew-kip-1.jpeg`, alt: 'A crew reunida no pódio do Kartódromo Internacional de Palmela.' },
+  { src: `${import.meta.env.BASE_URL}crew/podio-kip.jpeg`, alt: 'Nuno à esquerda, Tomás ao centro e Tiago à direita, com os seus troféus.' },
+  { src: `${import.meta.env.BASE_URL}crew/crew-kip-2.jpeg`, alt: 'Outra fotografia do grupo no pódio do KIP.' },
 ]
 
 function LandingCarousel() {
