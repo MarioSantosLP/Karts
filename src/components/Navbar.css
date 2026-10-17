@@ -1,0 +1,93 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgb(7 11 20 / 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 64px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Checkered-flag tile */
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+
+.brand-logo rect {
+  fill: var(--accent);
+}
+
+.brand-logo path {
+  fill: #fff;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-links a {
+  position: relative;
+  padding: 8px 14px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text);
+}
+
+.nav-links a.active {
+  font-weight: 600;
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: -14px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+@media (max-width: 760px) {
+  .brand-name {
+    display: none;
+  }
+
+  .nav-links a.active::after {
+    bottom: 0;
+  }
+}

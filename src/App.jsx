@@ -1,10 +1,19 @@
-import './App.css'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import StatsBar from './components/StatsBar'
+import LastSession from './components/LastSession'
+import { lastSession } from './data/season'
 
 function App() {
   return (
-    <main>
-      <h1>Karts</h1>
-    </main>
+    <>
+      <Navbar />
+      <main>
+        <Hero />
+        <StatsBar />
+        <LastSession session={lastSession} />
+      </main>
+    </>
   )
 }
 

@@ -1,0 +1,28 @@
+.track-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.track-map path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.track-glow {
+  stroke: var(--accent);
+  stroke-width: 44;
+  opacity: 0.45;
+}
+
+.track-edge {
+  stroke: var(--accent-bright);
+  stroke-width: 40;
+}
+
+.track-surface {
+  stroke: var(--surface);
+  stroke-width: 28;
+}
