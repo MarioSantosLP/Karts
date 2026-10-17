@@ -1,0 +1,26 @@
+.crew-carousel { padding-top: 28px; }
+.crew-carousel-frame { position: relative; width: 100%; aspect-ratio: 3 / 2; max-height: 74svh; overflow: hidden; border: 1px solid var(--border-strong); border-radius: 14px; background: #0b1018; touch-action: pan-y pinch-zoom; }
+.crew-carousel-slide { width: 100%; height: 100%; }
+.crew-carousel-slide[hidden] { display: none; }
+.crew-carousel-slide img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.crew-carousel-arrow { position: absolute; top: 50%; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #a4b8da65; border-radius: 50%; background: #0b142bd9; color: #e4edff; cursor: pointer; transform: translateY(-50%); transition: background .2s, border-color .2s; }
+.crew-carousel-arrow:hover { background: #19376de8; border-color: #8fb7ff; }
+.crew-carousel-arrow.is-previous { left: 16px; }
+.crew-carousel-arrow.is-next { right: 16px; }
+.crew-carousel-arrow svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.crew-carousel-footer { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px; min-height: 52px; }
+.crew-carousel-dots { grid-column: 2; display: flex; align-items: center; }
+.crew-carousel-dots button { display: grid; place-items: center; width: 30px; height: 36px; padding: 0; border: 0; border-radius: 5px; background: transparent; cursor: pointer; }
+.crew-carousel-dots span { width: 7px; height: 7px; border-radius: 50%; background: #34455e; transition: background .2s, transform .2s; }
+.crew-carousel-dots button[aria-pressed='true'] span { background: #6a9bff; transform: scale(1.15); }
+.crew-carousel-count { grid-column: 3; justify-self: end; color: #8095b4; font-size: 10px; font-variant-numeric: tabular-nums; letter-spacing: .1em; }
+@media (max-width: 600px) {
+  .crew-carousel { padding-top: 18px; }
+  .crew-carousel-frame { border-radius: 10px; }
+  .crew-carousel-arrow { width: 36px; height: 36px; }
+  .crew-carousel-arrow.is-previous { left: 8px; }
+  .crew-carousel-arrow.is-next { right: 8px; }
+  .crew-carousel-footer { gap: 6px; }
+  .crew-carousel-dots button { width: 24px; }
+  .crew-carousel-count { font-size: 9px; }
+}

@@ -1,120 +1,44 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useLayoutEffect, useRef, useSyncExternalStore } from 'react'
+import Navbar from './components/layout/Navbar'
+import Landing from './components/landing/Landing'
+import DriverProfile from './components/drivers/DriverProfile'
+import { drivers } from './data/drivers'
+
+function subscribeToHash(listener) {
+  window.addEventListener('hashchange', listener)
+  return () => window.removeEventListener('hashchange', listener)
+}
+
+const getHash = () => window.location.hash || '#inicio'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const hash = useSyncExternalStore(subscribeToHash, getHash, () => '#inicio')
+  const isProfileRoute = hash.startsWith('#piloto/')
+  const profileId = isProfileRoute ? hash.slice(8) : null
+  const driver = drivers.find(({ id }) => id === profileId)
+  const previousProfileRoute = useRef(null)
+
+  useLayoutEffect(() => {
+    document.title = isProfileRoute ? `${driver?.name ?? 'Piloto não encontrado'} | Apex Crew` : 'Apex Crew'
+    document.documentElement.dataset.view = isProfileRoute ? 'driver' : 'landing'
+    let frame
+    if (isProfileRoute) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      document.querySelector('[data-page-heading]')?.focus({ preventScroll: true })
+      frame = requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+    } else if (previousProfileRoute.current !== false) {
+      document.getElementById(hash.slice(1))?.scrollIntoView({ block: 'start', behavior: 'instant' })
+    }
+    previousProfileRoute.current = isProfileRoute
+    return () => cancelAnimationFrame(frame)
+  }, [hash, isProfileRoute, driver])
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      <Navbar profileMode={isProfileRoute} />
+      <main>
+        {isProfileRoute ? <DriverProfile key={profileId} driver={driver} /> : <Landing />}
+      </main>
     </>
   )
 }
