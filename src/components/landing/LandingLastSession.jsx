@@ -1,8 +1,8 @@
-import { formatDate, formatGap, formatLap, padNumber } from '../format'
-import './LastSession.css'
+import { lastSession } from '../../data/season'
+import { formatDate, formatGap, formatLap, padNumber } from '../../format'
 
-function LastSession({ session }) {
-  const leaderTime = session.results[0].bestLap
+function LandingLastSession() {
+  const leaderTime = lastSession.results[0].bestLap
 
   return (
     <section className="container section" id="ultima-sessao">
@@ -10,13 +10,13 @@ function LastSession({ session }) {
         <header className="session-card-header">
           <div>
             <p className="eyebrow">Última sessão</p>
-            <h2>{session.name}</h2>
+            <h2>{lastSession.name}</h2>
           </div>
-          <time dateTime={session.date}>{formatDate(session.date)}</time>
+          <time dateTime={lastSession.date}>{formatDate(lastSession.date)}</time>
         </header>
 
         <ol className="results">
-          {session.results.map((result, i) => (
+          {lastSession.results.map((result, i) => (
             <li key={result.driver} className={i === 0 ? 'is-leader' : undefined}>
               <span className="position">{i + 1}</span>
               <span className="driver">
@@ -40,4 +40,4 @@ function LastSession({ session }) {
   )
 }
 
-export default LastSession
+export default LandingLastSession

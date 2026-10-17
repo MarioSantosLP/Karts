@@ -1,8 +1,7 @@
-import TrackCard from './TrackCard'
-import { season, lastSession } from '../data/season'
-import './Hero.css'
+import LandingTrackCard from './LandingTrackCard'
+import { season } from '../../data/season'
 
-function Hero() {
+function LandingHero() {
   return (
     <section className="hero" id="inicio">
       <div className="container hero-inner">
@@ -24,10 +23,10 @@ function Hero() {
             </a>
           </div>
         </div>
-        <TrackCard session={lastSession} />
+        <LandingTrackCard />
       </div>
     </section>
   )
 }
 
-export default Hero
+export default LandingHero

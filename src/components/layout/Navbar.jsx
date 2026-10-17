@@ -1,4 +1,4 @@
-import { crewName } from '../data/season'
+import { crewName } from '../../data/season'
 import './Navbar.css'
 
 const links = [

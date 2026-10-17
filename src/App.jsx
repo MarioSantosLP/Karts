@@ -1,17 +1,12 @@
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import StatsBar from './components/StatsBar'
-import LastSession from './components/LastSession'
-import { lastSession } from './data/season'
+import Navbar from './components/layout/Navbar'
+import Landing from './components/landing/Landing'
 
 function App() {
   return (
     <>
       <Navbar />
       <main>
-        <Hero />
-        <StatsBar />
-        <LastSession session={lastSession} />
+        <Landing />
       </main>
     </>
   )

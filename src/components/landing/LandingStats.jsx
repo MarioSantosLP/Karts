@@ -1,6 +1,5 @@
-import { season } from '../data/season'
-import { formatCount } from '../format'
-import './StatsBar.css'
+import { season } from '../../data/season'
+import { formatCount } from '../../format'
 
 const stats = [
   { value: season.sessions, label: 'Sessões realizadas' },
@@ -9,7 +8,7 @@ const stats = [
   { value: season.circuits, label: 'Circuitos visitados' },
 ]
 
-function StatsBar() {
+function LandingStats() {
   return (
     <section className="container">
       <dl className="stats-bar">
@@ -24,4 +23,4 @@ function StatsBar() {
   )
 }
 
-export default StatsBar
+export default LandingStats
