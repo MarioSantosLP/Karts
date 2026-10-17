@@ -22,9 +22,11 @@ Validação: `npm run build` e `npm run lint`.
 
 ## Pilotos
 
+- Nuno Duarte e Tomás Duarte usam recortes transparentes partilhados em `public/portraits/`, centrados nos cartões e perfis. Os prompts e a origem estão documentados em `docs/portrait-prompts.md`. Uma foto carregada neste navegador substitui temporariamente o recorte; ao remover a substituição, volta a foto do projeto.
+
 - A grelha está em `#pilotos`; cada piloto tem uma ligação própria, por exemplo `#piloto/mario-santos`.
 - Nomes, números pessoais e cores: `src/data/drivers.js`. A associação aos resultados usa `driverId`, independente do kart utilizado em cada sessão. Tomás mantém o número pessoal 13 (kart 15 nesta sessão), e Nuno mantém 44 (kart 22).
 - A grelha mantém pesquisa, ordenação e paginação de seis pilotos por página. Os perfis mostram o histórico separado por sessão e permitem expandir todas as voltas e setores.
 - Cada perfil permite adicionar, substituir e remover uma foto JPG, PNG ou WebP até 8 MB. A imagem é otimizada e guardada no armazenamento local do navegador; também aparece no cartão da grelha.
-- As fotos ainda não são partilhadas entre navegadores ou dispositivos. Para isso será necessário ligar o carregamento de imagens a armazenamento persistente no servidor. Limpar os dados do site remove as fotos locais.
-- Até serem adicionadas as fotos reais, os perfis apresentam um capacete ilustrado.
+- As fotos carregadas pelo utilizador ainda não são partilhadas entre navegadores ou dispositivos. Para isso será necessário ligar o carregamento de imagens a armazenamento persistente no servidor. Limpar os dados do site remove as fotos locais.
+- Os pilotos sem foto do projeto ou substituição local apresentam um capacete ilustrado.

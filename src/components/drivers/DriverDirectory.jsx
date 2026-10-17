@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
 import { drivers, getDriverResults } from '../../data/drivers'
-import { formatLap, padNumber } from '../../format'
-import DriverPortrait from './DriverPortrait'
+import DriverCard from './DriverCard'
 import DriverSortMenu from './DriverSortMenu'
 import './Drivers.css'
 
@@ -50,15 +49,7 @@ function DriverDirectory() {
         <DriverSortMenu options={SORT_OPTIONS} value={sort} onChange={updateSort} />
       </div>
       <div className="drivers-grid">
-        {pageDrivers.map((driver) => {
-          const latest = getDriverResults(driver)[0]
-          return (
-            <a key={driver.id} href={`#piloto/${driver.id}`} className="driver-card" style={{ '--driver-accent': driver.accent }} aria-label={`Ver perfil de ${driver.name}`}>
-              <div className="driver-card-image"><DriverPortrait driver={driver} /><span className="driver-card-number" aria-hidden="true">{padNumber(driver.number)}</span><span className="driver-card-team">APEX CREW / PILOTO</span><span className="driver-card-open" aria-hidden="true">↗</span></div>
-              <div className="driver-card-content"><div className="driver-card-name"><h3>{driver.name}</h3><span>#{padNumber(driver.number)}</span></div><div className="driver-card-result"><div><span>Melhor volta registada</span><strong>{latest ? formatLap(Math.min(...getDriverResults(driver).map(({ result }) => result.bestLap))) : '—'}</strong></div><span className="driver-card-position">{latest ? `${latest.position}.º` : '—'}<small>última sessão</small></span></div><div className="driver-card-footer">Conhecer o piloto <span aria-hidden="true">→</span></div></div>
-            </a>
-          )
-        })}
+        {pageDrivers.map((driver) => <DriverCard key={driver.id} driver={driver} />)}
       </div>
       {displayedDrivers.length === 0 && <div className="drivers-empty" role="status"><p>Nenhum piloto encontrado.</p><button type="button" onClick={() => updateSearch('')}>Ver todos os pilotos</button></div>}
       <div className="drivers-footer">

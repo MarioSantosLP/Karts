@@ -65,7 +65,7 @@ function DriverPhotoEditor({ driver }) {
   function removePhoto() {
     try {
       savePhoto(null)
-      setMessage('Foto removida.')
+      setMessage(driver.portrait ? 'Foto original reposta.' : 'Foto removida.')
     } catch {
       setMessage('Não foi possível remover a foto neste navegador.')
     }
@@ -77,7 +77,7 @@ function DriverPhotoEditor({ driver }) {
       <div className="photo-editor-actions">
         <button className="photo-upload-button" type="button" onClick={() => input.current?.click()} disabled={busy}>
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m8 6 2-3h4l2 3h4v14H4V6h4Z" /><circle cx="12" cy="12" r="4" /></svg>
-          {busy ? 'A guardar…' : photo ? 'Alterar foto' : 'Adicionar foto'}
+          {busy ? 'A guardar…' : (photo || driver.portrait) ? 'Alterar foto' : 'Adicionar foto'}
         </button>
         {photo && <button className="photo-remove-button" type="button" onClick={removePhoto} disabled={busy} aria-label={`Remover foto de ${driver.name}`}>Remover</button>}
       </div>

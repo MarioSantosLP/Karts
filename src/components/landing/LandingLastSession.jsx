@@ -1,12 +1,15 @@
 import { useState } from 'react'
-import { getFastestResult, lastSession, sessions } from '../../data/season'
+import { lastSession, sessions } from '../../data/season'
 import { tracks } from '../../data/tracks'
+import { drivers } from '../../data/drivers'
+import DriverCard from '../drivers/DriverCard'
 import { formatDate, formatGap, formatLap, padNumber } from '../../format'
 
 function LandingLastSession() {
   const [sessionId, setSessionId] = useState(lastSession.id)
   const session = sessions.find(({ id }) => id === sessionId)
-  const fastest = getFastestResult(session)
+  const winnerResult = session.results.find((result) => result.position === 1)
+  const winner = drivers.find((driver) => driver.id === winnerResult?.driverId)
   const isRace = session.type === 'race'
 
   return (
@@ -16,12 +19,12 @@ function LandingLastSession() {
         <span className="session-date"><span className="tiny-square" /> {formatDate(session.date)} {session.date.slice(0, 4)}</span>
       </div>
       <div className="session-switch" role="group" aria-label="Escolher sessão">
-        {sessions.map((item) => <button key={item.id} type="button" aria-pressed={sessionId === item.id} onClick={() => setSessionId(item.id)}>{item.type === 'race' ? 'Corrida' : 'Classificação'} · {item.time}</button>)}
+        {sessions.map((item) => <button key={item.id} type="button" aria-pressed={sessionId === item.id} onClick={() => setSessionId(item.id)}>{item.name}</button>)}
       </div>
       <div className="session-layout" id="ultima-sessao">
         <article className="session-card" id="classificacao" aria-label="Resultados da sessão" data-reveal>
           <header className="session-card-header">
-            <div><h3>{session.name}</h3><p>{tracks[session.trackId].name} <span>·</span> {session.time}</p></div>
+            <div><h3>{session.name}</h3><p>{tracks[session.trackId].name}</p></div>
             <span className="results-badge">{session.results.length} pilotos</span>
           </header>
           <div className="session-results-scroll" tabIndex={0} role="region" aria-label="Tabela de resultados; desliza para ver todas as colunas">
@@ -38,12 +41,9 @@ function LandingLastSession() {
           <p className="results-scroll-hint">Desliza a tabela para ver voltas e intervalos →</p>
           <footer className="session-card-footer"><span className="signal-dot" /> {isRace ? 'Posição de chegada · intervalo para o anterior' : 'Ordenada pela melhor volta · diferença para o líder'}</footer>
         </article>
-        <aside className="fastest-card" data-reveal aria-label="Destaque da sessão">
-          <div className="fastest-top"><span className="eyebrow">O ritmo a bater</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 2-9 12h6l-1 8 9-12h-6z" /></svg></div>
-          <span className="fastest-number" aria-hidden="true">{padNumber(fastest.kartNumber)}</span>
-          <div className="fastest-content"><span className="fastest-caption">Volta mais rápida · {isRace ? 'corrida' : 'classificação'}</span><p className="fastest-time">{formatLap(fastest.bestLap)}</p><h3>{fastest.driver}</h3></div>
-          <div className="fastest-footer"><span className="tiny-square" /> Kart #{fastest.kartNumber} · {session.time}</div>
-        </aside>
+        {winner && <aside className="session-winner" data-reveal aria-label={isRace ? 'Vencedor da corrida' : 'Primeiro na classificação'}>
+          <DriverCard driver={winner} result={winnerResult} sessionType={session.type} label={isRace ? 'Vencedor da corrida' : '1.º na classificação'} className="session-winner-card" />
+        </aside>}
       </div>
     </section>
   )

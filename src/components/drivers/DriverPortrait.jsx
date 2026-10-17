@@ -3,7 +3,9 @@ import { useDriverPhoto } from '../../hooks/useDriverPhoto'
 function DriverPortrait({ driver, priority = false }) {
   const [photo] = useDriverPhoto(driver.id)
 
-  if (photo) return <img className="driver-portrait-image" src={photo} alt={`Foto de ${driver.name}`} loading={priority ? 'eager' : 'lazy'} />
+  const portrait = photo || driver.portrait
+
+  if (portrait) return <img className={`driver-portrait-image${!photo && driver.portrait ? ' is-cutout' : ''}`} src={portrait} alt={`Foto de ${driver.name}`} loading={priority ? 'eager' : 'lazy'} />
 
   return (
     <div className="driver-portrait-placeholder" role="img" aria-label={`Foto de ${driver.name} ainda não adicionada`}>

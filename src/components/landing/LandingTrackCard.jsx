@@ -29,7 +29,6 @@ function LandingTrackCard({ paused, onToggleMotion }) {
         <span className="status-pill">{lastSession.status}</span>
       </header>
       <div className="track-card-map" onPointerMove={moveCircuit} onPointerLeave={resetCircuit}>
-        <span className="track-watermark" aria-hidden="true">APEX</span>
         <div className="circuit-coordinates" aria-hidden="true"><span>TRAÇADO / 01</span><span>APEX CREW</span></div>
         <div className="circuit-tilt"><TrackMap track={track} paused={paused} /></div>
         <div className="best-lap">
