@@ -1,108 +1,44 @@
 :root {
-  --bg: #070b14;
-  --surface: #0b1220;
-  --surface-raised: #121b2e;
-  --surface-muted: #1e293b;
-  --border: rgb(148 163 184 / 0.12);
-  --border-strong: rgb(148 163 184 / 0.22);
-  --grid: rgb(148 163 184 / 0.05);
-
-  --text: #f1f5f9;
-  --text-muted: #94a3b8;
-
-  --accent: #2563eb;
-  --accent-bright: #3b82f6;
-  --accent-glow: rgb(37 99 235 / 0.45);
-  --positive: #22c55e;
+  --bg: #080b10;
+  --surface: #0e131c;
+  --surface-raised: #141c29;
+  --surface-muted: #202a3b;
+  --border: rgb(164 184 218 / 0.1);
+  --border-strong: rgb(164 184 218 / 0.2);
+  --grid: rgb(139 172 221 / 0.045);
+  --text: #f1f4fa;
+  --text-muted: #8c9bb0;
+  --accent: #2764f5;
+  --accent-bright: #6a9bff;
+  --accent-glow: rgb(39 100 245 / 0.35);
+  --positive: #79d8b2;
   --gold: #facc15;
-
-  --radius: 12px;
-  --radius-lg: 18px;
-
+  --radius: 8px;
+  --radius-lg: 16px;
   color-scheme: dark;
-  font-family: Inter, system-ui, sans-serif;
+  font-family: Inter, Arial, sans-serif;
   color: var(--text);
   background: var(--bg);
+  font-synthesis: none;
   -webkit-font-smoothing: antialiased;
 }
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: var(--bg);
-}
-
-main {
-  padding-bottom: 96px;
-}
-
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.section {
-  margin-top: 64px;
-}
-
-.eyebrow {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 28px;
-  border-radius: var(--radius);
-  font-size: 1.05rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.15s, border-color 0.15s, transform 0.15s;
-}
-
-.button:hover {
-  transform: translateY(-1px);
-}
-
-.button-primary {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 10px 30px -10px var(--accent-glow);
-}
-
-.button-primary:hover {
-  background: var(--accent-bright);
-}
-
-.button-ghost {
-  border: 1px solid var(--border-strong);
-  color: var(--text);
-}
-
-.button-ghost:hover {
-  border-color: var(--accent-bright);
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent-bright);
-  outline-offset: 2px;
-}
-
-@media (max-width: 560px) {
-  .container {
-    padding: 0 16px;
-  }
-}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button { font: inherit; color: inherit; }
+::selection { color: #fff; background: #2457c9; }
+.container { width: 100%; max-width: 1360px; margin: 0 auto; padding: 0 48px; }
+.eyebrow { margin: 0; color: var(--text-muted); font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.tiny-square { display: inline-block; flex: 0 0 auto; width: 5px; height: 5px; background: var(--accent-bright); }
+.signal-dot { display: inline-block; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-bright); box-shadow: 0 0 12px var(--accent-glow); }
+.button { display: inline-flex; align-items: center; justify-content: space-between; gap: 26px; min-height: 52px; padding: 16px 22px; border: 1px solid transparent; border-radius: 5px; font-size: 12px; font-weight: 650; text-decoration: none; transition: background .2s, box-shadow .2s, transform .2s; }
+.button-primary { color: #fff; background: var(--accent); box-shadow: 0 6px 32px rgb(39 100 245 / .22), inset 0 1px rgb(255 255 255 / .14); }
+.button-primary:hover { background: #3b75ff; box-shadow: 0 10px 40px rgb(39 100 245 / .38); transform: translateY(-3px); }
+.button span { font-size: 20px; font-weight: 400; transition: transform .2s; }
+.button:hover span { transform: translate(2px, -2px); }
+:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 5px; }
+@media (min-width: 1600px) { .container { max-width: 1480px; } }
+@media (max-width: 1100px) { .container { padding: 0 32px; } }
+@media (max-width: 600px) { .container { padding: 0 22px; } html { scroll-padding-top: 90px; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }

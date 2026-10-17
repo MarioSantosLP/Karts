@@ -1,8 +1,10 @@
 .track-map {
+  position: relative;
   display: block;
   width: 100%;
   height: auto;
   overflow: visible;
+  filter: drop-shadow(0 28px 24px rgb(0 0 0 / 0.42));
 }
 
 .track-map path {
@@ -11,18 +13,119 @@
   stroke-linejoin: round;
 }
 
-.track-glow {
-  stroke: var(--accent);
-  stroke-width: 44;
-  opacity: 0.45;
+.track-stage {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.track-depth {
+  stroke-width: 51;
+}
+
+.track-depth-far {
+  stroke: #020713;
+  transform: translateY(15px);
+}
+
+.track-depth-near {
+  stroke: #17304c;
+  transform: translateY(7px);
+}
+
+.track-ambient {
+  stroke: #287dd9;
+  stroke-width: 54;
+  opacity: 0.18;
 }
 
 .track-edge {
-  stroke: var(--accent-bright);
-  stroke-width: 40;
+  stroke-width: 47;
 }
 
 .track-surface {
-  stroke: var(--surface);
-  stroke-width: 28;
+  stroke-width: 39;
+}
+
+.track-lane {
+  stroke: #789ebf;
+  stroke-width: 1.2;
+  stroke-dasharray: 1.2 4.5;
+  opacity: 0.35;
+}
+
+.track-route {
+  stroke: #a4dfff;
+  stroke-width: 2.8;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0.55;
+  animation: circuit-draw 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+
+.start-finish line {
+  stroke: #79c5ed;
+  stroke-width: 2;
+  opacity: 0.8;
+}
+
+.track-racer-trail {
+  stroke: var(--kart-color);
+  stroke-width: 5;
+}
+
+.track-racer-trail.trail-far {
+  stroke-width: 3;
+  opacity: 0.18;
+}
+
+.track-racer-trail.trail-near {
+  opacity: 0.55;
+}
+
+.track-racer-wheel {
+  fill: #010711;
+  stroke: #7592ae;
+  stroke-width: 0.8;
+}
+
+.track-racer-body {
+  fill: var(--kart-color);
+}
+
+.track-racer-cockpit {
+  fill: #0b1b2e;
+}
+
+.track-racer-light {
+  fill: #fff;
+}
+
+.track-map[data-paused='true'] .track-route {
+  animation-play-state: paused;
+}
+
+@keyframes circuit-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .track-map {
+    filter: drop-shadow(0 15px 16px rgb(0 0 0 / 0.38));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track-route {
+    animation: none;
+  }
+
+  .track-route {
+    stroke-dashoffset: 0;
+  }
+
+  .track-racer {
+    display: none;
+  }
 }

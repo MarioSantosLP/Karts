@@ -10,15 +10,17 @@ const stats = [
 
 function LandingStats() {
   return (
-    <section className="container">
-      <dl className="stats-bar">
-        {stats.map((stat) => (
-          <div key={stat.label}>
-            <dt>{stat.label}</dt>
-            <dd>{formatCount(stat.value)}</dd>
-          </div>
-        ))}
-      </dl>
+    <section className="season-section" id="temporada" aria-label="Estatísticas da temporada">
+      <div className="container season-inner" data-reveal>
+        <p className="eyebrow season-heading">A temporada<br /><strong>em números.</strong><span>{season.year} / Apex Crew</span></p>
+        <dl className="stats-bar">
+          {stats.map((stat, index) => (
+            <div key={stat.label} style={{ '--reveal-delay': `${index * 80}ms` }}>
+              <dt>{stat.label}</dt><dd>{formatCount(stat.value)}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </section>
   )
 }
