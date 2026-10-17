@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import LandingHero from './LandingHero'
+import LandingCarousel from './LandingCarousel'
 import LandingStats from './LandingStats'
 import LandingLastSession from './LandingLastSession'
 import DriverDirectory from '../drivers/DriverDirectory'
@@ -30,6 +31,7 @@ function Landing() {
 
   return (
     <div ref={landingRef} className="landing" data-motion={paused ? 'paused' : 'running'}>
+      <LandingCarousel />
       <LandingHero paused={paused} onToggleMotion={() => setPaused((value) => !value)} />
       <LandingStats />
       <LandingLastSession />

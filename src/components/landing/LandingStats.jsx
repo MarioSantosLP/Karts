@@ -2,7 +2,7 @@ import { season } from '../../data/season'
 import { formatCount } from '../../format'
 
 const stats = [
-  { value: season.sessions, label: 'Sessões realizadas' },
+  { value: season.grandsPrix, label: "GP's Realizados" },
   { value: season.laps, label: 'Voltas registadas' },
   { value: season.drivers, label: 'Pilotos ativos' },
   { value: season.circuits, label: 'Circuitos visitados' },

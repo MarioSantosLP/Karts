@@ -15,17 +15,18 @@ function LandingLastSession() {
   return (
     <section className="container session-section" id="sessoes" aria-labelledby="session-title">
       <div className="section-heading" data-reveal>
-        <div><p className="eyebrow"><span className="section-number">01</span> Última ida à pista</p><h2 id="session-title">A pista deu o <em>veredicto.</em></h2></div>
-        <span className="session-date"><span className="tiny-square" /> {formatDate(session.date)} {session.date.slice(0, 4)}</span>
-      </div>
-      <div className="session-switch" role="group" aria-label="Escolher sessão">
-        {sessions.map((item) => <button key={item.id} type="button" aria-pressed={sessionId === item.id} onClick={() => setSessionId(item.id)}>{item.name}</button>)}
+        <p className="eyebrow"><span className="section-number">01</span> Última ida à pista</p>
       </div>
       <div className="session-layout" id="ultima-sessao">
         <article className="session-card" id="classificacao" aria-label="Resultados da sessão" data-reveal>
           <header className="session-card-header">
-            <div><h3>{session.name}</h3><p>{tracks[session.trackId].name}</p></div>
-            <span className="results-badge">{session.results.length} pilotos</span>
+            <div className="session-card-heading">
+              <h2 id="session-title">Quem levou a melhor <em>desta vez?</em></h2>
+              <p>{tracks[session.trackId].name}<span aria-hidden="true">·</span><time dateTime={session.date}>{formatDate(session.date)} {session.date.slice(0, 4)}</time></p>
+            </div>
+            <div className="session-switch" role="group" aria-label="Escolher sessão">
+              {sessions.map((item) => <button key={item.id} type="button" aria-pressed={sessionId === item.id} onClick={() => setSessionId(item.id)}>{item.name}</button>)}
+            </div>
           </header>
           <div className="session-results-scroll" tabIndex={0} role="region" aria-label="Tabela de resultados; desliza para ver todas as colunas">
             <table className="session-results-table">

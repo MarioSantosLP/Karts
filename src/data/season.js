@@ -6,7 +6,7 @@ export const lastSession = sessions[sessions.length - 1]
 
 export const season = {
   year: 2026,
-  sessions: sessions.length,
+  grandsPrix: new Set(sessions.map((session) => `${session.trackId}:${session.date}`)).size,
   laps: sessions.reduce((sum, session) => sum + session.results.reduce((total, result) => total + result.laps, 0), 0),
   drivers: new Set(sessions.flatMap((session) => session.results.map((result) => result.driverId))).size,
   circuits: new Set(sessions.map((session) => session.trackId)).size,

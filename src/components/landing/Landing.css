@@ -88,6 +88,20 @@
 .session-card-header h3 { margin: 0 0 7px; font-size: 13px; font-weight: 550; }
 .session-card-header p { color: #7586a1; font-size: 8px; margin: 0; line-height: 1.7; }
 .session-card-header p span { margin: 0 4px; }
+.session-section > .section-heading { margin-bottom: 20px; }
+.session-card-header { flex-wrap: wrap; gap: 20px; padding-block: 6px 26px; }
+.session-card-heading { flex: 1 1 300px; min-width: 0; }
+.session-card-heading h2 { margin: 0 0 12px; color: #edf2fa; font-size: clamp(22px, 2.1vw, 28px); font-weight: 550; line-height: 1.2; letter-spacing: -.05em; text-wrap: balance; }
+.session-card-heading h2 em { color: #70a5f5; font-style: normal; }
+.session-card-header .session-card-heading p { color: #8da1bf; font-size: 12px; }
+.session-card-heading p span { margin-inline: 10px; }
+.session-card-header .session-switch { flex: 0 0 auto; flex-wrap: nowrap; margin: 0; }
+.session-card-header .session-switch button { padding: 12px 14px; white-space: nowrap; }
+.session-card-header .session-switch button:focus-visible { outline: 2px solid #89b5ff; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .session-card-header .session-card-heading { flex-basis: 100%; }
+  .session-card-header .session-switch { width: 100%; }
+}
 .results-badge { padding: 5px 8px; background: #141e2c; border: 1px solid var(--border); border-radius: 4px; color: #8da3c4; font-size: 8px; }
 .results-labels, .results li { display: grid; grid-template-columns: 32px minmax(0, 1fr) 102px 62px; align-items: center; gap: 12px; }
 .results-labels { padding: 10px 12px; border-top: 1px solid var(--border); color: #7386a4; font-size: 7px; text-transform: uppercase; letter-spacing: .07em; }

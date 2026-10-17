@@ -3,7 +3,7 @@ import { lastSession, season } from '../../data/season'
 
 function LandingHero({ paused, onToggleMotion }) {
   return (
-    <section className="hero" id="inicio" aria-labelledby="hero-title">
+    <section className="hero" aria-labelledby="hero-title">
       <div className="hero-grid" aria-hidden="true" />
       <div className="hero-orbit" aria-hidden="true" />
       <div className="container hero-inner">
