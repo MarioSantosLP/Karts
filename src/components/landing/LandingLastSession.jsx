@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { lastSession, sessions } from '../../data/season'
+import { defaultSession, sessions } from '../../data/season'
 import { tracks } from '../../data/tracks'
 import { drivers } from '../../data/drivers'
 import DriverCard from '../drivers/DriverCard'
 import { formatDate, formatGap, formatLap, padNumber } from '../../format'
 
 function LandingLastSession() {
-  const [sessionId, setSessionId] = useState(lastSession.id)
+  const [sessionId, setSessionId] = useState(defaultSession.id)
   const session = sessions.find(({ id }) => id === sessionId)
   const winnerResult = session.results.find((result) => result.position === 1)
   const winner = drivers.find((driver) => driver.id === winnerResult?.driverId)
@@ -25,7 +25,7 @@ function LandingLastSession() {
               <p>{tracks[session.trackId].name}<span aria-hidden="true">·</span><time dateTime={session.date}>{formatDate(session.date)} {session.date.slice(0, 4)}</time></p>
             </div>
             <div className="session-switch" role="group" aria-label="Escolher sessão">
-              {sessions.map((item) => <button key={item.id} type="button" aria-pressed={sessionId === item.id} onClick={() => setSessionId(item.id)}>{item.name}</button>)}
+              {[...sessions].sort((a, b) => Number(b.type === 'race') - Number(a.type === 'race')).map((item) => <button key={item.id} type="button" aria-pressed={sessionId === item.id} onClick={() => setSessionId(item.id)}>{item.name}</button>)}
             </div>
           </header>
           <div className="session-results-scroll" tabIndex={0} role="region" aria-label="Tabela de resultados; desliza para ver todas as colunas">

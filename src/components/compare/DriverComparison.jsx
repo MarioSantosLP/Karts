@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { drivers } from '../../data/drivers'
-import { lastSession, sessions } from '../../data/season'
+import { defaultSession, sessions } from '../../data/season'
 import { tracks } from '../../data/tracks'
 import { formatDate, formatGap, formatLap, padNumber } from '../../format'
 import DriverPortrait from '../drivers/DriverPortrait'
+import SelectMenu from '../shared/SelectMenu'
 import { getBestValue, getResultStats } from './comparison'
 import './DriverComparison.css'
 
@@ -126,9 +127,9 @@ function LapTable({ entries }) {
 }
 
 function DriverComparison() {
-  const [meetingId, setMeetingId] = useState(`${lastSession.trackId}:${lastSession.date}`)
-  const [sessionType, setSessionType] = useState('race')
-  const [selected, setSelected] = useState([lastSession.results[0]?.driverId ?? '', lastSession.results[1]?.driverId ?? '', ''])
+  const [meetingId, setMeetingId] = useState(`${defaultSession.trackId}:${defaultSession.date}`)
+  const [sessionType, setSessionType] = useState(defaultSession.type)
+  const [selected, setSelected] = useState([defaultSession.results[0]?.driverId ?? '', defaultSession.results[1]?.driverId ?? '', ''])
   const meeting = meetings.find(({ id }) => id === meetingId) ?? meetings[0]
   const session = meeting.sessions.find((item) => item.type === sessionType) ?? meeting.sessions[0]
   const entries = selected.flatMap((id, slot) => {
@@ -151,20 +152,17 @@ function DriverComparison() {
         <p>Escolhe até três pilotos. Os tempos contam o resto.</p>
       </header>
       <section className="comparison-filters" aria-label="Escolher GP e sessão">
-        <label className="comparison-meeting-label">Dia de pista<select value={meeting.id} onChange={(event) => setMeetingId(event.target.value)}>{meetings.map((item) => <option key={item.id} value={item.id}>{tracks[item.trackId].name} · {formatDate(item.date)} {item.date.slice(0, 4)}</option>)}</select></label>
+        <div className="comparison-meeting-label"><label id="compare-meeting-label" htmlFor="compare-meeting">Dia de pista</label><SelectMenu id="compare-meeting" labelId="compare-meeting-label" value={meeting.id} onChange={setMeetingId} options={meetings.map((item) => ({ value: item.id, label: `${tracks[item.trackId].name} · ${formatDate(item.date)} ${item.date.slice(0, 4)}` }))} /></div>
         <div className="session-switch" role="group" aria-label="Sessão a comparar">
-          {[...meeting.sessions].sort((a, b) => a.time.localeCompare(b.time)).map((item) => <button type="button" key={item.id} aria-pressed={session.id === item.id} onClick={() => setSessionType(item.type)}>{item.name}</button>)}
+          {[...meeting.sessions].sort((a, b) => Number(b.type === 'race') - Number(a.type === 'race')).map((item) => <button type="button" key={item.id} aria-pressed={session.id === item.id} onClick={() => setSessionType(item.type)}>{item.name}</button>)}
         </div>
       </section>
       <section className="comparison-selectors" aria-label="Escolher até três pilotos">
         {selected.map((id, slot) => {
           const entry = entries.find((item) => item.slot === slot)
           return <article key={slot} className={`comparison-slot${entry ? ' is-selected' : ''}`} style={{ '--comparison-color': colors[slot], '--driver-accent': entry?.driver.accent ?? colors[slot] }}>
-            <div className="comparison-slot-top"><label htmlFor={`compare-driver-${slot}`}>Piloto {padNumber(slot + 1)}</label>{entry && <button type="button" className="comparison-remove" aria-label={`Retirar ${entry.driver.name} da comparação`} onClick={() => selectDriver(slot, '')}>×</button>}</div>
-            <select id={`compare-driver-${slot}`} value={id} onChange={(event) => selectDriver(slot, event.target.value)}>
-              <option value="">{slot === 2 ? 'Adicionar terceiro piloto' : 'Selecionar piloto'}</option>
-              {drivers.map((driver) => <option key={driver.id} value={driver.id} disabled={selected.some((value, index) => index !== slot && value === driver.id)}>#{padNumber(driver.number)} · {driver.name}</option>)}
-            </select>
+            <div className="comparison-slot-top"><label id={`compare-driver-${slot}-label`} htmlFor={`compare-driver-${slot}`}>Piloto {padNumber(slot + 1)}</label>{entry && <button type="button" className="comparison-remove" aria-label={`Retirar ${entry.driver.name} da comparação`} onClick={() => selectDriver(slot, '')}>×</button>}</div>
+            <SelectMenu id={`compare-driver-${slot}`} labelId={`compare-driver-${slot}-label`} value={id} onChange={(value) => selectDriver(slot, value)} options={[{ value: '', label: slot === 2 ? 'Adicionar terceiro piloto' : 'Selecionar piloto' }, ...drivers.map((driver) => ({ value: driver.id, label: `#${padNumber(driver.number)} · ${driver.name}`, disabled: selected.some((value, index) => index !== slot && value === driver.id) }))]} />
             {entry ? <div className="comparison-slot-body">
               <div><a href={`#piloto/${entry.driver.id}`} className="comparison-profile-link">Ver perfil ↗</a><strong>{entry.stats ? formatLap(entry.stats.bestLap) : '—'}</strong><p>{!entry.stats ? 'Sem resultados nesta sessão' : entry.stats.bestLap === fastest && entries.filter((item) => item.stats).length >= 2 ? 'Melhor volta entre os selecionados' : 'Melhor volta da sessão'}</p>{entry.stats && <span className="comparison-gap">{entry.stats.bestLap === fastest ? 'Referência' : `${formatGap(entry.stats.bestLap - fastest)} s face à referência`}</span>}</div>
               <div className="comparison-portrait" aria-hidden="true"><DriverPortrait driver={entry.driver} /></div>

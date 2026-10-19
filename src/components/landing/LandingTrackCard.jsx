@@ -40,7 +40,7 @@ function LandingTrackCard({ paused, onToggleMotion }) {
           {paused ? <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6Z" /></svg> : <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4h3v12H6zm5 0h3v12h-3z" /></svg>}
         </button>
       </div>
-      <div className="circuit-name"><span className="tiny-square" /><span>{track.name}</span><span className="circuit-name-arrow" aria-hidden="true">↗</span></div>
+      <a className="circuit-name" href={`#pista/${track.slug}`} aria-label={`Conhecer a pista ${track.name}`}><span className="tiny-square" /><span>{track.name}</span><span className="circuit-name-arrow" aria-hidden="true">↗</span></a>
       <dl className="track-card-stats">
         <div><dt>Data da sessão</dt><dd>{formatDate(lastSession.date)} <span>{lastSession.date.slice(0, 4)}</span></dd></div>
         <div><dt>Voltas do vencedor</dt><dd>{lastSession.laps}</dd></div>

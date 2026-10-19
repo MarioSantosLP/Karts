@@ -4,7 +4,7 @@ import './Navbar.css'
 
 const links = [
   { label: 'Início', href: '#inicio' },
-  { label: 'Circuito', href: '#circuitos' },
+  { label: 'Pistas', href: '#pistas' },
   { label: 'Sessão', href: '#sessoes' },
   { label: 'Pilotos', href: '#pilotos' },
   { label: 'Comparar', href: '#comparar' },
@@ -12,11 +12,12 @@ const links = [
 
 const sectionForHash = (hash) => {
   if (hash.startsWith('#piloto/')) return '#pilotos'
+  if (hash.startsWith('#pista/') || hash === '#circuitos') return '#pistas'
   if (hash === '#classificacao' || hash === '#ultima-sessao') return '#sessoes'
   return links.some((link) => link.href === hash) ? hash : '#inicio'
 }
 
-function Navbar({ profileMode = false, compareMode = false }) {
+function Navbar({ profileMode = false, compareMode = false, tracksMode = false }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState(() => sectionForHash(window.location.hash))
   const menuButton = useRef(null)
@@ -25,8 +26,8 @@ function Navbar({ profileMode = false, compareMode = false }) {
     let frame = null
     const updateActiveSection = () => {
       frame = null
-      if (profileMode || compareMode) {
-        setActiveSection(compareMode ? '#comparar' : '#pilotos')
+      if (profileMode || compareMode || tracksMode) {
+        setActiveSection(tracksMode ? '#pistas' : compareMode ? '#comparar' : '#pilotos')
         return
       }
 
@@ -36,7 +37,7 @@ function Navbar({ profileMode = false, compareMode = false }) {
       let closestTop = -Infinity
       if (window.scrollY > 12) {
         links.forEach(({ href }) => {
-          const section = document.getElementById(href.slice(1))
+          const section = document.getElementById(href === '#pistas' ? 'circuitos' : href.slice(1))
           if (!section) return
           const top = section.getBoundingClientRect().top
           if (top <= marker && top > closestTop) {
@@ -65,7 +66,7 @@ function Navbar({ profileMode = false, compareMode = false }) {
       window.removeEventListener('scroll', scheduleUpdate)
       window.removeEventListener('resize', scheduleUpdate)
     }
-  }, [profileMode, compareMode])
+  }, [profileMode, compareMode, tracksMode])
 
   useEffect(() => {
     if (!menuOpen) return undefined

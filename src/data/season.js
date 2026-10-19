@@ -3,6 +3,7 @@ import { kipSessions } from './sessions/kip-2026-10-17.js'
 export const crewName = 'Apex Crew'
 export const sessions = kipSessions
 export const lastSession = sessions[sessions.length - 1]
+export const defaultSession = sessions.find((session) => session.type === 'race' && session.date === lastSession.date && session.trackId === lastSession.trackId) ?? lastSession
 
 export const season = {
   year: 2026,
