@@ -5,7 +5,9 @@ function DriverPortrait({ driver, priority = false }) {
 
   const portrait = photo || driver.portrait
 
-  if (portrait) return <img className={`driver-portrait-image${!photo && driver.portrait ? ' is-cutout' : ''}`} src={portrait} alt={`Foto de ${driver.name}`} loading={priority ? 'eager' : 'lazy'} />
+  const defaultStyle = driver.portraitType === 'photo' ? ' is-photo' : ` is-cutout${driver.portraitType === 'wide-cutout' ? ' is-wide-cutout' : ''}`
+
+  if (portrait) return <img className={`driver-portrait-image${!photo && driver.portrait ? defaultStyle : ''}`} src={portrait} alt={`Foto de ${driver.name}`} loading={priority ? 'eager' : 'lazy'} />
 
   return (
     <div className="driver-portrait-placeholder" role="img" aria-label={`Foto de ${driver.name} ainda não adicionada`}>

@@ -76,7 +76,7 @@ function DriverProfile({ driver }) {
                           </article>
                           <details className="profile-session-details">
                             <summary>Voltas, setores e velocidade · {session.name}</summary>
-                            <ResultDetails result={result} />
+                            <ResultDetails result={result} sessionType={session.type} />
                           </details>
                         </div>
                       ))}

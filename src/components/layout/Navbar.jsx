@@ -4,9 +4,10 @@ import './Navbar.css'
 
 const links = [
   { label: 'Início', href: '#inicio' },
+  { label: 'Circuito', href: '#circuitos' },
   { label: 'Sessão', href: '#sessoes' },
   { label: 'Pilotos', href: '#pilotos' },
-  { label: 'Circuito', href: '#circuitos' },
+  { label: 'Comparar', href: '#comparar' },
 ]
 
 const sectionForHash = (hash) => {
@@ -15,57 +16,56 @@ const sectionForHash = (hash) => {
   return links.some((link) => link.href === hash) ? hash : '#inicio'
 }
 
-function Navbar({ profileMode = false }) {
+function Navbar({ profileMode = false, compareMode = false }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState(() => sectionForHash(window.location.hash))
-  const preferredSection = useRef(sectionForHash(window.location.hash))
   const menuButton = useRef(null)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleSection = entries.find((entry) => entry.isIntersecting)
-        if (!visibleSection) return
+    let frame = null
+    const updateActiveSection = () => {
+      frame = null
+      if (profileMode || compareMode) {
+        setActiveSection(compareMode ? '#comparar' : '#pilotos')
+        return
+      }
 
-        // Circuito and Pilotos are nested anchors. Track their parent sections
-        // while preserving the destination the visitor explicitly selected.
-        if (visibleSection.target.id === 'pilotos') {
-          setActiveSection('#pilotos')
-        } else if (visibleSection.target.id === 'inicio') {
-          setActiveSection(preferredSection.current === '#circuitos' ? '#circuitos' : '#inicio')
-        } else {
-          setActiveSection(preferredSection.current === '#pilotos' ? '#pilotos' : '#sessoes')
-        }
-      },
-      { rootMargin: '-15% 0px -65% 0px', threshold: 0 },
-    )
-
-    ;(profileMode ? [] : ['inicio', 'sessoes', 'pilotos']).forEach((id) => {
-      const section = document.getElementById(id)
-      if (section) observer.observe(section)
-    })
+      // Follow the actual anchors, including the circuit below the photo carousel.
+      const marker = Math.max(110, window.innerHeight * 0.3)
+      let currentSection = '#inicio'
+      let closestTop = -Infinity
+      if (window.scrollY > 12) {
+        links.forEach(({ href }) => {
+          const section = document.getElementById(href.slice(1))
+          if (!section) return
+          const top = section.getBoundingClientRect().top
+          if (top <= marker && top > closestTop) {
+            currentSection = href
+            closestTop = top
+          }
+        })
+      }
+      setActiveSection(currentSection)
+    }
+    const scheduleUpdate = () => {
+      if (frame === null) frame = requestAnimationFrame(updateActiveSection)
+    }
 
     const updateHash = () => {
-      preferredSection.current = sectionForHash(window.location.hash)
-      setActiveSection(preferredSection.current)
+      setActiveSection(sectionForHash(window.location.hash))
+      scheduleUpdate()
     }
-    let previousScrollY = window.scrollY
-    const updateTop = () => {
-      const scrollY = window.scrollY
-      if (!profileMode && scrollY <= 12 && previousScrollY > 12) {
-        preferredSection.current = '#inicio'
-        setActiveSection('#inicio')
-      }
-      previousScrollY = scrollY
-    }
+    scheduleUpdate()
     window.addEventListener('hashchange', updateHash)
-    window.addEventListener('scroll', updateTop, { passive: true })
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    window.addEventListener('resize', scheduleUpdate)
     return () => {
-      observer.disconnect()
+      cancelAnimationFrame(frame)
       window.removeEventListener('hashchange', updateHash)
-      window.removeEventListener('scroll', updateTop)
+      window.removeEventListener('scroll', scheduleUpdate)
+      window.removeEventListener('resize', scheduleUpdate)
     }
-  }, [profileMode])
+  }, [profileMode, compareMode])
 
   useEffect(() => {
     if (!menuOpen) return undefined
@@ -89,7 +89,6 @@ function Navbar({ profileMode = false }) {
   }, [menuOpen])
 
   const selectSection = (href) => {
-    preferredSection.current = href
     setActiveSection(href)
     setMenuOpen(false)
   }
